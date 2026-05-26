@@ -1,0 +1,761 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,top=25mm,bottom=25mm}
+\usepackage{parskip}
+
+\newif\ifshowsolutions
+\showsolutionstrue  % comment to hide solutions
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Control Technology \\[6pt] Exercises}\\[12pt]
+  \rule{\textwidth}{0.4pt}
+\end{center}
+
+
+\section{Tank Level Control System}
+
+A liquid tank has cross-sectional area $A$. The inflow is $q_{in}(t)$, outflow is proportional to level $h(t)$.
+
+\[
+A\frac{dh(t)}{dt} = q_{in}(t) - \frac{1}{R}h(t)
+\]
+
+Parameters:
+
+\[
+A=5,\quad R=2
+\]
+
+\begin{enumerate}
+
+\item[(a)] Derive the transfer function $G(s)=H(s)/Q_{in}(s)$.
+
+\item[(b)] Determine system type and stability.
+
+\item[(c)] Calculate the step response:
+\begin{enumerate}
+\item[(i)] steady-state gain
+\item[(ii)] time constant
+\end{enumerate}
+
+\item[(d)] Interpret the frequency response.
+
+\item[(e)] PI control design:
+\[
+C(s)=K_P+\frac{K_I}{s}
+\]
+\begin{enumerate}
+\item[(i)] Derive the closed-loop characteristic equation.
+\item[(ii)] Determine the steady-state error for a step input.
+\end{enumerate}
+
+\item[(f)] Engineering interpretation:
+Why is PI control almost always used for tank systems?
+
+\end{enumerate}
+
+\ifshowsolutions
+Solution:
+
+\begin{enumerate}
+
+\item[(a)]~\\
+
+Laplace:
+
+\[
+AsH(s)=Q_{in}(s)-\frac{1}{R}H(s)
+\]
+
+\[
+H(s)\left(As+\frac{1}{R}\right)=Q_{in}(s)
+\]
+
+\[
+G(s)=\frac{H(s)}{Q_{in}(s)}=\frac{1}{As+\frac{1}{R}}
+\]
+
+Insert values:
+
+\[
+G(s)=\frac{1}{5s+0.5}
+\]
+
+\item[(b)]~\\
+
+First order system → stable (pole at $-0.1$)
+
+\item[(c)]~\\
+
+DC gain:
+
+\[
+G(0)=\frac{1}{0.5}=2
+\]
+
+Time constant:
+
+\[
+\tau = \frac{A}{1/R} = AR = 10
+\]
+
+\item[(d)]~\\
+
+First-order low-pass system
+
+Slope: -20 dB/dec
+
+\item[(e)]~\\
+
+PI controller closed-loop:
+
+\[
+L(s)=\frac{K_P s+K_I}{s(5s+0.5)}
+\]
+
+Characteristic equation:
+
+\[
+s(5s+0.5)+K_P s+K_I=0
+\]
+
+\[
+5s^2+(0.5+K_P)s+K_I=0
+\]
+
+Steady-state error:
+
+\[
+e_{ss}=0
+\]
+
+for stable system
+
+\item[(f)]~\\
+
+PI is used because:
+
+\begin{itemize}
+  \item process is integrating-like or slow
+  \item steady-state offset unacceptable
+  \item P control alone leaves offset
+\end{itemize}
+
+\end{enumerate}
+
+\section{Mass-Spring-Damper System}
+
+A mechanical system consists of a mass $m$, damper $c$, and spring $k$.
+
+\[
+m\ddot{x}(t) + c\dot{x}(t) + kx(t) = F(t)
+\]
+
+Parameters:
+
+\[
+m=2,\quad c=4,\quad k=6
+\]
+
+Assume zero initial conditions.
+
+\begin{enumerate}
+
+\item[(a)] Derive the transfer function
+\[
+G(s)=\frac{X(s)}{F(s)}.
+\]
+
+\item[(b)] Determine system order and stability.
+
+\item[(c)] Step response analysis:
+\begin{enumerate}
+\item[(i)] steady-state displacement
+\item[(ii)] settling time estimate
+\end{enumerate}
+
+\item[(d)] Frequency response interpretation:
+\begin{enumerate}
+\item[(i)] system type (low/high-pass)
+\item[(ii)] DC gain
+\item[(iii)] qualitative high-frequency behavior
+\end{enumerate}
+
+\item[(e)] Closed-loop with proportional controller $C(s)=K_P$:
+\begin{enumerate}
+\item[(i)] Derive the closed-loop transfer function.
+\item[(ii)] Determine the characteristic equation.
+\item[(iii)] Determine the stability condition for $K_P$.
+\end{enumerate}
+
+\item[(f)] PI controller:
+\[
+C(s)=K_P+\frac{K_I}{s}
+\]
+
+\begin{enumerate}
+\item[(i)] Derive the closed-loop characteristic equation.
+\item[(ii)] Determine the steady-state error for a step input.
+\end{enumerate}
+
+\end{enumerate}
+
+\ifshowsolutions
+Solution:
+
+\begin{enumerate}
+
+\item[(a)]~\\
+
+Laplace transform:
+
+\[
+ms^2X(s)+csX(s)+kX(s)=F(s)
+\]
+
+\[
+G(s)=\frac{X(s)}{F(s)}=\frac{1}{ms^2+cs+k}
+\]
+
+Insert values:
+
+\[
+G(s)=\frac{1}{2s^2+4s+6}
+\]
+
+\item[(b)]~\\
+
+Order: 2
+
+Stability: all coefficients positive → stable
+
+\item[(c)]~\\
+
+Steady-state (step input):
+
+\[
+G(0)=\frac{1}{6}
+\]
+
+\[
+x(\infty)=\frac{1}{6}
+\]
+
+Settling time:
+
+dominant pole approx → order 2 stable system:
+
+\[
+T_s \approx \frac{4}{\zeta\omega_n}
+\]
+
+(accept qualitative estimate)
+
+\item[(d)]~\\
+
+Type: low-pass system
+
+DC gain:
+
+\[
+G(0)=\frac{1}{6}
+\]
+
+High frequency:
+
+\[
+|G(j\omega)| \sim \frac{1}{\omega^2}
+\]
+
+→ slope -40 dB/dec
+
+\item[(e)]~\\
+
+Closed loop:
+
+\[
+T(s)=\frac{K_P}{2s^2+4s+6+K_P}
+\]
+
+Characteristic equation:
+
+\[
+2s^2+4s+6+K_P=0
+\]
+
+Stability:
+
+all coefficients positive → $K_P>-6$
+
+(practically $K_P>0$)
+
+\item[(f)]~\\
+
+PI controller:
+
+\[
+C(s)=\frac{K_P s+K_I}{s}
+\]
+
+Characteristic equation:
+
+\[
+s(2s^2+4s+6)+K_P s+K_I=0
+\]
+
+\[
+2s^3+4s^2+(6+K_P)s+K_I=0
+\]
+
+Steady-state error:
+
+PI introduces integrator → for step input:
+
+\[
+e_{ss}=0
+\]
+
+\end{enumerate}
+
+\fi
+
+
+\section{DC Motor Control System}
+
+A separately excited DC motor is described by the following physical relations.
+
+Electrical subsystem:
+
+\[
+u(t) = L\frac{di(t)}{dt} + Ri(t) + e(t)
+\]
+
+Back electromotive force:
+
+\[
+e(t) = K\,\omega(t)
+\]
+
+Mechanical subsystem:
+
+\[
+J\frac{d\omega(t)}{dt} + b\,\omega(t) = K\,i(t)
+\]
+
+The parameters are:
+
+\[
+J=0.02,\quad b=0.2,\quad L=0.5,\quad R=1,\quad K=0.1
+\]
+
+Assume zero initial conditions.
+
+\begin{enumerate}
+
+\item[(a)] \textbf{Modeling}~\\
+
+Derive the transfer function
+
+\[
+G(s)=\frac{\Omega(s)}{U(s)}
+\]
+
+starting from the physical equations.
+
+\item[(b)] \textbf{System representation}~\\
+
+Insert numerical values and express the transfer function in polynomial form.
+
+Determine the system order.
+
+Is the system stable? Justify your answer.
+
+\item[(c)] \textbf{Time-domain behavior}~\\
+
+The system is excited by a unit step input.
+
+\begin{enumerate}
+\item[(i)] Determine the steady-state value of the angular velocity.
+\item[(ii)] Estimate the settling time using a first-order approximation.
+\end{enumerate}
+
+\item[(d)] \textbf{Frequency-domain interpretation}~\\
+
+Consider the transfer function obtained in (b).
+
+\begin{enumerate}
+\item[(i)] What type of system (low-pass, high-pass, etc.) is this?
+\item[(ii)] What is the DC gain?
+\item[(iii)] Explain qualitatively how the magnitude behaves for low and high frequencies.
+\end{enumerate}
+
+\item[(e)] \textbf{Proportional control}~\\
+
+The motor is controlled in unity feedback with a proportional controller
+
+\[
+C(s)=K_P.
+\]
+
+\begin{enumerate}
+\item[(i)] Derive the closed-loop transfer function.
+\item[(ii)] Determine the characteristic equation.
+\item[(iii)] Determine the stability condition for $K_P$.
+\end{enumerate}
+
+\item[(f)] \textbf{PI control}~\\
+
+Now consider a PI controller:
+
+\[
+C(s)=K_P + \frac{K_I}{s}.
+\]
+
+\begin{enumerate}
+\item[(i)] Derive the closed-loop characteristic equation.
+\item[(ii)] Explain the effect of the integral term on steady-state error.
+\item[(iii)] Determine the steady-state error for a step input (qualitatively or using final value theorem).
+\end{enumerate}
+
+\end{enumerate}
+
+\ifshowsolutions
+Solution:
+
+\begin{enumerate}
+
+\item[(a)] \textbf{Modeling}~\\
+
+Take the Laplace transform under zero initial conditions.
+
+Electrical equation:
+
+\[
+U(s)=LsI(s)+RI(s)+E(s)
+\]
+
+Using
+
+\[
+E(s)=K\Omega(s)
+\]
+
+gives
+
+\[
+U(s)=(Ls+R)I(s)+K\Omega(s)
+\]
+
+Mechanical equation:
+
+\[
+Js\Omega(s)+b\Omega(s)=KI(s)
+\]
+
+Thus
+
+\[
+I(s)=\frac{Js+b}{K}\Omega(s)
+\]
+
+Substitute into the electrical equation:
+
+\[
+U(s)
+=
+(Ls+R)\frac{Js+b}{K}\Omega(s)
++
+K\Omega(s)
+\]
+
+Factor out $\Omega(s)$:
+
+\[
+U(s)
+=
+\left(
+\frac{(Ls+R)(Js+b)}{K}
++
+K
+\right)
+\Omega(s)
+\]
+
+Therefore,
+
+\[
+\frac{\Omega(s)}{U(s)}
+=
+\frac{K}
+{(Js+b)(Ls+R)+K^2}
+\]
+
+Hence,
+
+\[
+G(s)
+=
+\frac{K}
+{(Js+b)(Ls+R)+K^2}
+\]
+
+\item[(b)] \textbf{System representation}~\\
+
+Expand the denominator:
+
+\[
+(Js+b)(Ls+R)+K^2
+\]
+
+\[
+=
+JLs^2+(JR+bL)s+bR+K^2
+\]
+
+Insert values:
+
+\[
+JL=0.02\cdot0.5=0.01
+\]
+
+\[
+JR=0.02\cdot1=0.02
+\]
+
+\[
+bL=0.2\cdot0.5=0.10
+\]
+
+\[
+bR=0.2\cdot1=0.20
+\]
+
+\[
+K^2=0.01
+\]
+
+Therefore,
+
+\[
+G(s)
+=
+\frac{0.1}
+{0.01s^2+0.12s+0.21}
+\]
+
+The highest power of $s$ is two.
+
+Therefore, the system is a second-order system.
+
+\paragraph{(d) Stability}~\\
+
+The denominator polynomial is
+
+\[
+0.01s^2+0.12s+0.21
+\]
+
+All coefficients are positive.
+
+For a second-order polynomial
+
+\[
+a_2s^2+a_1s+a_0
+\]
+
+the system is stable (all poles in the left half-plane) if
+
+\[
+a_2>0,\quad a_1>0,\quad a_0>0
+\]
+
+Since this condition is fulfilled, the system is stable.
+
+\item[(c)] \textbf{Time-domain behavior}~\\
+
+Step input steady-state value:
+
+\[
+G(0)=\frac{0.1}{0.21}\approx 0.476
+\]
+
+Thus:
+
+\[
+\omega(\infty)\approx 0.476
+\]
+
+Settling time approximation:
+
+Normalize denominator:
+
+\[
+0.01s^2+0.12s+0.21
+\]
+
+Dominant time constant approximation:
+
+\[
+\tau \approx \frac{1}{\text{dominant pole}} \approx \frac{1}{2} \approx 0.5 \text{ to } 1 \text{ s}
+\]
+
+More robust engineering estimate:
+
+\[
+T_s \approx \frac{4}{\text{dominant pole}} \approx 2 \text{ to } 4 \text{ s}
+\]
+
+(acceptable qualitative result expected)
+
+\item[(d)] \textbf{Frequency-domain interpretation}~\\
+
+Type of system:
+
+Second-order system with no zeros → low-pass behavior.
+
+DC gain:
+
+\[
+G(0)=\frac{0.1}{0.21}\approx 0.476
+\]
+
+Qualitative behavior:
+
+\begin{itemize}
+  \item For low frequencies: magnitude approximately constant (DC gain)
+  \item For high frequencies: denominator dominates → magnitude decreases
+  \item Asymptotic slope: approximately \(-40\) dB/decade
+\end{itemize}
+
+\item[(e)] \textbf{Proportional control}~\\
+
+Controller:
+
+\[
+C(s)=K_P
+\]
+
+Closed-loop transfer function:
+
+\[
+T(s)=\frac{K_P G(s)}{1+K_P G(s)}
+\]
+
+Insert plant:
+
+\[
+T(s)=\frac{K_P \cdot 0.1}{0.01s^2+0.12s+0.21+0.1K_P}
+\]
+
+Characteristic equation:
+
+\[
+0.01s^2+0.12s+0.21+0.1K_P=0
+\]
+
+Stability condition:
+
+Second-order system stable if all coefficients positive:
+
+\[
+0.01>0,\quad 0.12>0,\quad 0.21+0.1K_P>0
+\]
+
+Thus:
+
+\[
+K_P>-2.1
+\]
+
+For practical control (positive gain):
+
+\[
+K_P>0
+\]
+
+\item[(f)] \textbf{PI control}~\\
+
+Controller:
+
+\[
+C(s)=K_P+\frac{K_I}{s}=\frac{K_P s+K_I}{s}
+\]
+
+Open-loop transfer function:
+
+\[
+L(s)=\frac{K_P s+K_I}{s}\cdot \frac{0.1}{0.01s^2+0.12s+0.21}
+\]
+
+(i) Characteristic equation:
+
+\[
+1+L(s)=0
+\]
+
+Multiply through:
+
+\[
+s(0.01s^2+0.12s+0.21)+0.1(K_P s+K_I)=0
+\]
+
+Expand:
+
+\[
+0.01s^3+0.12s^2+0.21s+0.1K_P s+0.1K_I=0
+\]
+
+Thus:
+
+\[
+0.01s^3+0.12s^2+(0.21+0.1K_P)s+0.1K_I=0
+\]
+
+(ii) Effect of integral term:
+
+The integral term introduces an additional pole at the origin in the open loop.
+
+Consequences:
+
+\begin{itemize}
+  \item eliminates steady-state error for step inputs
+  \item increases system type by 1
+  \item may reduce stability margin
+\end{itemize}
+
+(iii) Steady-state error (step input):
+
+Using final value theorem:
+
+\[
+e_{ss}=\lim_{s\to 0} \frac{1}{1+L(s)}
+\]
+
+For PI controller:
+
+\[
+\lim_{s\to 0} L(s)=\infty
+\]
+
+due to \(1/s\) term.
+
+Thus:
+
+\[
+e_{ss}=0
+\]
+
+for a stable closed-loop system.
+
+\end{enumerate}
+
+\fi
+
+\end{document}
